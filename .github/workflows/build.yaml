@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        projects: [ 'controllers' ]
+        projects: [ 'tar-file' ]
     name: ${{ matrix.projects }}
     steps:
       - name: Checkout code
