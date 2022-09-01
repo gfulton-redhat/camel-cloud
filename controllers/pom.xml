@@ -14,19 +14,20 @@
   </properties>
   <dependencyManagement>
     <dependencies>
+<!--      <dependency>-->
+<!--        <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--        <artifactId>jackson-annotations</artifactId>-->
+<!--        <version>2.13.3</version>-->
+<!--      </dependency>-->
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>2.13.3</version>
+        </dependency>
       <dependency>
-        <groupId>org.apache.camel</groupId>
-        <artifactId>camel-bom</artifactId>
-        <version>${camelVersion}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>com.google.cloud</groupId>
-        <artifactId>libraries-bom</artifactId>
-        <version>26.0.0</version>
-        <type>pom</type>
-        <scope>import</scope>
+        <groupId>io.fabric8</groupId>
+        <artifactId>openshift-client</artifactId>
+        <version>6.0.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -66,19 +67,35 @@
                 </sources>
               </configuration>
             </execution>
-            <execution>
-              <id>add-generated-test-sources</id>
-              <goals>
-                <goal>add-test-source</goal>
-              </goals>
-              <configuration>
-                <sources>
-                  <source>${project.build.directory}/generated-test-sources/camel-component</source>
-                </sources>
-              </configuration>
-            </execution>
+<!--            <execution>-->
+<!--              <id>add-generated-test-sources</id>-->
+<!--              <goals>-->
+<!--                <goal>add-test-source</goal>-->
+<!--              </goals>-->
+<!--              <configuration>-->
+<!--                <sources>-->
+<!--                  <source>${project.build.directory}/generated-test-sources/camel-component</source>-->
+<!--                </sources>-->
+<!--              </configuration>-->
+<!--            </execution>-->
           </executions>
+
         </plugin>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>java-generator-maven-plugin</artifactId>
+            <version>6.0.0</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <source>src/main/resources/kubernetes</source>
+            </configuration>
+          </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
@@ -87,7 +104,7 @@
       </plugins>
     </pluginManagement>
   </build>
-<!--  <modules>-->
-<!--    <module>data-analysis</module>-->
-<!--  </modules>-->
+  <modules>
+    <module>tar-file</module>
+  </modules>
 </project>
